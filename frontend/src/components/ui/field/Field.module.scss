@@ -1,0 +1,14 @@
+.field {
+	> label {
+		> span {
+			@apply text-gray-500;
+		}
+		> input {
+			@apply w-full my-2 h-9 outline-none px-3 bg-transparent border border-gray-500 rounded-sm;
+		}
+	}
+}
+
+.error {
+	@apply text-red-500 text-sm mb-2 font-semibold;
+}

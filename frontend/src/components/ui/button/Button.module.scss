@@ -1,0 +1,11 @@
+.button {
+	@apply px-4 h-9 rounded-md hover:bg-primary transition-colors duration-300;
+}
+
+.default {
+	@apply bg-primary/80;
+}
+
+.outline {
+	@apply border border-primary;
+}
