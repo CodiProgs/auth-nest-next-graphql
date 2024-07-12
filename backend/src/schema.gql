@@ -1,0 +1,42 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthType {
+  accessToken: String!
+  user: UserType!
+}
+
+input CreateUserDto {
+  email: String!
+  name: String!
+  password: String!
+}
+
+input LoginDto {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  login(loginInput: LoginDto!): AuthType!
+  logout: Boolean!
+  refreshTokens: String!
+  register(registerInput: CreateUserDto!): AuthType!
+  updateUser(updateUserInput: UpdateUserDto!): String!
+}
+
+type Query {
+  profile: UserType!
+}
+
+input UpdateUserDto {
+  email: String!
+  name: String!
+}
+
+type UserType {
+  email: String!
+  id: String!
+  name: String!
+}
