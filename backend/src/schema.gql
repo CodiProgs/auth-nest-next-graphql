@@ -19,11 +19,11 @@ input LoginDto {
 }
 
 type Mutation {
+  getNewTokens: String!
   login(loginInput: LoginDto!): AuthType!
   logout: Boolean!
-  refreshTokens: String!
   register(registerInput: CreateUserDto!): AuthType!
-  updateUser(updateUserInput: UpdateUserDto!): String!
+  updateUser(updateUserInput: UpdateUserDto!): UserType!
 }
 
 type Query {

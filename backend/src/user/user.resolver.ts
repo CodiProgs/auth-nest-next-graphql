@@ -15,7 +15,7 @@ export class UserResolver {
 	}
 
 	@Auth()
-	@Mutation(() => String)
+	@Mutation(() => UserType)
 	async updateUser(
 		@CurrentUser('id') id: string,
 		@Args('updateUserInput') dto: UpdateUserDto

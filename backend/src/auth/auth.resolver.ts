@@ -39,7 +39,7 @@ export class AuthResolver {
 	}
 
 	@Mutation(() => String)
-	async refreshTokens(@Context() context: { res: Response; req: Request }) {
+	async getNewTokens(@Context() context: { res: Response; req: Request }) {
 		const refreshToken =
 			context.req.cookies[this.authService.REFRESH_TOKEN_NAME]
 
