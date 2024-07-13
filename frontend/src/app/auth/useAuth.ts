@@ -5,36 +5,44 @@ import { useState } from 'react'
 import { UseFormReset } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { DASHBOARD_URL, SERVER_URL } from '@/config/url.config'
+import { saveTokenStorage } from '@/services/auth-token.service'
+
+import { DASHBOARD_URL } from '@/config/url.config'
 
 import {
-	CreateUserDto,
 	LoginDocument,
 	LoginDto,
-	RegisterDocument
+	LoginMutation,
+	RegisterDocument,
+	RegisterDto,
+	RegisterMutation
 } from '@/gql/graphql'
 
 export const useAuth = (
 	isLogin: boolean,
-	reset: UseFormReset<CreateUserDto & LoginDto>
+	reset: UseFormReset<RegisterDto & LoginDto>
 ) => {
 	const [errors, setErrors] = useState<GraphQLErrorExtensions>({})
 
 	const mutation = isLogin ? LoginDocument : RegisterDocument
 	const { push, refresh } = useRouter()
 
-	const [mutate, { loading }] = useMutation(mutation, {
-		onCompleted() {
-			reset()
-			toast.success('Success')
-			push(DASHBOARD_URL.home())
-			refresh()
-		},
-		onError(error) {
-			const extensions = error?.graphQLErrors?.[0]?.extensions
-			setErrors(extensions)
+	const [mutate, { loading }] = useMutation<RegisterMutation & LoginMutation>(
+		mutation,
+		{
+			onCompleted(data) {
+				reset()
+				saveTokenStorage(data.login?.accessToken || data.register?.accessToken)
+				toast.success('Success')
+				push(DASHBOARD_URL.home())
+				refresh()
+			},
+			onError(error) {
+				const extensions = error?.graphQLErrors?.[0]?.extensions
+				setErrors(extensions)
+			}
 		}
-	})
+	)
 
 	return { mutate, loading, errors, setErrors }
 }

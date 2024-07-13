@@ -6,9 +6,10 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import Button from '@/components/ui/button/Button'
 import Heading from '@/components/ui/heading/Heading'
 
+import styles from './Auth.module.scss'
 import AuthFields from './AuthFields'
 import { useAuth } from './useAuth'
-import { CreateUserDto, LoginDto } from '@/gql/graphql'
+import { LoginDto, RegisterDto } from '@/gql/graphql'
 
 const Auth: FC = () => {
 	const [isLogin, setIsLogin] = useState(true)
@@ -18,7 +19,7 @@ const Auth: FC = () => {
 		reset,
 		handleSubmit,
 		formState: { errors }
-	} = useForm<CreateUserDto & LoginDto>({
+	} = useForm<RegisterDto & LoginDto>({
 		mode: 'onChange'
 	})
 
@@ -29,7 +30,7 @@ const Auth: FC = () => {
 		setErrors
 	} = useAuth(isLogin, reset)
 
-	const onSubmit: SubmitHandler<CreateUserDto & LoginDto> = data => {
+	const onSubmit: SubmitHandler<RegisterDto & LoginDto> = data => {
 		setErrors({})
 		mutate({
 			variables: data
@@ -37,9 +38,9 @@ const Auth: FC = () => {
 	}
 
 	return (
-		<div className='flex items-center justify-center h-screen'>
-			<div className='p-8 bg-soft_bg dark:bg-dark_soft_bg w-1/3'>
-				<Heading className='text-3xl mb-4'>
+		<div className={styles.wrapper}>
+			<div className={styles.content}>
+				<Heading className={styles.heading}>
 					{isLogin ? 'Login' : 'Register'}
 				</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
@@ -51,23 +52,23 @@ const Auth: FC = () => {
 					/>
 					<>
 						{graphqlErrors?.form && (
-							<p className='text-red-500 text-sm mb-6'>
-								{graphqlErrors.form as string}
-							</p>
+							<p className={styles.error}>{graphqlErrors.form as string}</p>
 						)}
 					</>
-					<div className='flex items-center justify-between'>
+					<div className={styles.buttons}>
 						<Button
 							type='submit'
 							disabled={loading}
-							className='disabled:cursor-not-allowed'
 						>
 							{loading ? 'loading' : isLogin ? 'Login' : 'Register'}
 						</Button>
 						<Button
 							variant='outline'
 							type='button'
-							onClick={() => setIsLogin(!isLogin)}
+							onClick={() => {
+								setIsLogin(!isLogin)
+								setErrors({})
+							}}
 						>
 							{isLogin ? 'Create account' : 'Login'}
 						</Button>

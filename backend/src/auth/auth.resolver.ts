@@ -1,10 +1,10 @@
 import { Args, Context, Mutation, Resolver } from '@nestjs/graphql'
 import { AuthService } from './auth.service'
 import { AuthType } from './type/auth.type'
-import { CreateUserDto } from 'src/user/dto/create-user.dto'
 import { Request, Response } from 'express'
 import { LoginDto } from './dto/login.dto'
 import { BadRequestException } from '@nestjs/common'
+import { RegisterDto } from './dto/register.dto'
 
 @Resolver()
 export class AuthResolver {
@@ -12,7 +12,7 @@ export class AuthResolver {
 
 	@Mutation(() => AuthType)
 	async register(
-		@Args('registerInput') dto: CreateUserDto,
+		@Args('registerInput') dto: RegisterDto,
 		@Context() context: { res: Response }
 	): Promise<AuthType> {
 		const { refreshToken, ...res } = await this.authService.register(dto)

@@ -4,13 +4,14 @@ import { FieldErrors, UseFormRegister } from 'react-hook-form'
 
 import Field from '@/components/ui/field/Field'
 
+import styles from './Auth.module.scss'
 import { validEmail } from './valid-email'
-import { CreateUserDto, LoginDto } from '@/gql/graphql'
+import { LoginDto, RegisterDto } from '@/gql/graphql'
 
 interface IAuthField {
 	isLogin: boolean
-	register: UseFormRegister<CreateUserDto & LoginDto>
-	errors: FieldErrors<CreateUserDto & LoginDto>
+	register: UseFormRegister<RegisterDto & LoginDto>
+	errors: FieldErrors<RegisterDto & LoginDto>
 	graphqlErrors: GraphQLErrorExtensions
 }
 
@@ -21,7 +22,7 @@ const AuthFields: FC<IAuthField> = ({
 	graphqlErrors
 }) => {
 	return (
-		<div className='space-y-4 mb-4'>
+		<div className={styles.fields}>
 			{!isLogin && (
 				<Field
 					placeholder='Name'

@@ -7,10 +7,10 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import { UserService } from 'src/user/user.service'
 import { LoginDto } from './dto/login.dto'
-import { CreateUserDto } from 'src/user/dto/create-user.dto'
 import { verify } from 'argon2'
 import { Response } from 'express'
 import { User } from '@prisma/client'
+import { RegisterDto } from './dto/register.dto'
 
 @Injectable()
 export class AuthService {
@@ -29,7 +29,7 @@ export class AuthService {
 		return { user, ...tokens }
 	}
 
-	async register(dto: CreateUserDto) {
+	async register(dto: RegisterDto) {
 		let user: User
 
 		try {

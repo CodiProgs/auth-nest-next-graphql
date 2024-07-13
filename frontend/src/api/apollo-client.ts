@@ -25,12 +25,13 @@ const errorLink = onError(
 )
 
 const httpLink = createHttpLink({
-	uri: `${SERVER_URL}graphql`,
+	uri: `${SERVER_URL}/graphql`,
 	credentials: 'include'
 })
 
 const authMiddleware = new ApolloLink((operation, forward) => {
 	const token = getAccessToken()
+
 	operation.setContext({
 		headers: {
 			Authorization: token ? `Bearer ${token}` : ''

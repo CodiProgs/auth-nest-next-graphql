@@ -7,12 +7,6 @@ type AuthType {
   user: UserType!
 }
 
-input CreateUserDto {
-  email: String!
-  name: String!
-  password: String!
-}
-
 input LoginDto {
   email: String!
   password: String!
@@ -22,12 +16,18 @@ type Mutation {
   getNewTokens: String!
   login(loginInput: LoginDto!): AuthType!
   logout: Boolean!
-  register(registerInput: CreateUserDto!): AuthType!
+  register(registerInput: RegisterDto!): AuthType!
   updateUser(updateUserInput: UpdateUserDto!): UserType!
 }
 
 type Query {
   profile: UserType!
+}
+
+input RegisterDto {
+  email: String!
+  name: String!
+  password: String!
 }
 
 input UpdateUserDto {
