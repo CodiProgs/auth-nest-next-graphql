@@ -8,7 +8,7 @@ interface IHeading {
 }
 
 const Heading: FC<PropsWithChildren<IHeading>> = ({ children, className }) => {
-	return <h1 className={cn(styles.heading, className)}>{children}</h1>
+	return <h1 className={cn(className, styles.heading)}>{children}</h1>
 }
 
 export default Heading

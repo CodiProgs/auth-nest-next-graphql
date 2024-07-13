@@ -1,6 +1,6 @@
 import { CodegenConfig } from '@graphql-codegen/cli'
 
-import { SERVER_URL } from './src/config/url.config'
+import { SERVER_URL } from '@/config/api.config'
 
 const config: CodegenConfig = {
 	schema: `${SERVER_URL}/graphql`,

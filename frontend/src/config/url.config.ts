@@ -1,7 +1,3 @@
-import 'dotenv/config'
-
-export const SERVER_URL = process.env.NEXT_PUBLIC_URL_SERVER as string
-
 export const PUBLIC_URL = {
 	home: () => '/',
 	auth: () => '/auth'
