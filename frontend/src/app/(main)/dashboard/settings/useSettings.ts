@@ -9,7 +9,7 @@ export const useSettings = (reset: UseFormReset<UpdateUserDto>) => {
 	const [errors, setErrors] = useState<GraphQLErrorExtensions>({})
 
 	const [mutate, { loading }] = useUpdateUserMutation({
-		onCompleted(data) {
+		onCompleted() {
 			reset()
 			toast.success('Success')
 		},

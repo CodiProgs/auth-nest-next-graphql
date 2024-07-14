@@ -45,10 +45,10 @@ const Auth: FC = () => {
 				</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<AuthFields
-						errors={errors}
-						graphqlErrors={graphqlErrors}
 						isLogin={isLogin}
 						register={register}
+						errors={errors}
+						graphqlErrors={graphqlErrors}
 					/>
 					<>
 						{graphqlErrors?.form && (

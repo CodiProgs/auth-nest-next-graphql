@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { DASHBOARD_URL, PUBLIC_URL } from './config/url.config'
-import { EnumTokens } from './services/auth-token.service'
+import { EnumTokens, tokenService } from './services/token.service'
 
 export async function middleware(request: NextRequest) {
 	const refreshToken = request.cookies.get(EnumTokens.REFRESH_TOKEN)?.value
@@ -17,6 +17,7 @@ export async function middleware(request: NextRequest) {
 	}
 
 	if (refreshToken === undefined) {
+		tokenService.remove()
 		return NextResponse.redirect(new URL(PUBLIC_URL.auth(), request.url))
 	}
 

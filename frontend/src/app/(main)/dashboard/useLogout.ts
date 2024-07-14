@@ -1,19 +1,14 @@
 import { useRouter } from 'next/navigation'
 
-import { removeFromStorage } from '@/services/auth-token.service'
+import { authService } from '@/services/auth.service'
 
 import { PUBLIC_URL } from '@/config/url.config'
-
-import { useLogoutMutation } from '@/gql/graphql'
 
 export const useLogout = () => {
 	const { push } = useRouter()
 
-	const [mutateLogout] = useLogoutMutation()
-
 	const logout = () => {
-		removeFromStorage()
-		mutateLogout()
+		authService.logout()
 		push(PUBLIC_URL.auth())
 	}
 

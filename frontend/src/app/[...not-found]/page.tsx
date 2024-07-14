@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
-import { NO_INDEX_PAGE } from '@/constants/seo.constant'
-import styles from './NotFound.module.scss'
 import Link from 'next/link'
-import { PUBLIC_URL } from '@/config/url.config'
+
 import Heading from '@/components/ui/heading/Heading'
 
+import { PUBLIC_URL } from '@/config/url.config'
+
+import styles from './NotFound.module.scss'
+
 export const metadata: Metadata = {
-	title: 'Page not found',
-	...NO_INDEX_PAGE
+	title: 'Page not found'
 }
 
 export default function NotFoundPage() {

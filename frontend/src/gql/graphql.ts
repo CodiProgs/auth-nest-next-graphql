@@ -78,7 +78,7 @@ export type UserType = {
 export type GetNewTokensMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNewTokensMutation = { __typename?: 'Mutation', getNewTokens: string };
+export type GetNewTokensMutation = { __typename?: 'Mutation', token: string };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -118,7 +118,7 @@ export type UpdateUserMutation = { __typename?: 'Mutation', user: { __typename?:
 
 export const GetNewTokensDocument = gql`
     mutation GetNewTokens {
-  getNewTokens
+  token: getNewTokens
 }
     `;
 export type GetNewTokensMutationFn = Apollo.MutationFunction<GetNewTokensMutation, GetNewTokensMutationVariables>;

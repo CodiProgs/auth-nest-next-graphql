@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { UseFormReset } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { saveTokenStorage } from '@/services/auth-token.service'
+import { tokenService } from '@/services/token.service'
 
 import { DASHBOARD_URL } from '@/config/url.config'
 
@@ -32,7 +32,7 @@ export const useAuth = (
 		{
 			onCompleted(data) {
 				reset()
-				saveTokenStorage(data.login?.accessToken || data.register?.accessToken)
+				tokenService.save(data.login?.accessToken || data.register?.accessToken)
 				toast.success('Success')
 				push(DASHBOARD_URL.home())
 				refresh()

@@ -1,10 +1,12 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Button from '@/components/ui/button/Button'
 import Heading from '@/components/ui/heading/Heading'
+
+import { useProfile } from '@/hooks/useProfile'
 
 import styles from './Settings.module.scss'
 import SettingsFields from './SettingsFields'
@@ -12,15 +14,18 @@ import { useSettings } from './useSettings'
 import { UpdateUserDto } from '@/gql/graphql'
 
 const Settings: FC = () => {
+	const { user, loading: loadingProfile } = useProfile()
+
 	const {
 		register,
 		reset,
 		handleSubmit,
 		formState: { errors }
 	} = useForm<UpdateUserDto>({
-		mode: 'onChange'
+		mode: 'onChange',
+		values: useMemo(() => user?.user, [user])
 	})
-
+	console.log('render')
 	const {
 		mutate,
 		loading,
@@ -41,16 +46,21 @@ const Settings: FC = () => {
 				<Heading className={styles.heading}>Settings</Heading>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<SettingsFields
+						register={register}
 						errors={errors}
 						graphqlErrors={graphqlErrors}
-						register={register}
 					/>
 					<>
 						{graphqlErrors?.form && (
 							<p className={styles.error}>{graphqlErrors.form as string}</p>
 						)}
 					</>
-					<Button type='submit'>Update</Button>
+					<Button
+						type='submit'
+						disabled={loading}
+					>
+						Update
+					</Button>
 				</form>
 			</div>
 		</div>

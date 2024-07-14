@@ -17,7 +17,7 @@ import { useLogout } from './useLogout'
 const Dashboard: FC = () => {
 	const { push } = useRouter()
 
-	const { user, loading, error } = useProfile(push)
+	const { user, loading } = useProfile(push)
 	const { logout } = useLogout()
 
 	return (
@@ -29,7 +29,6 @@ const Dashboard: FC = () => {
 					<Heading className={styles.heading}>Hello {user?.user.name}!</Heading>
 					<Button
 						className={styles.button}
-						variant='default'
 						onClick={() => push(DASHBOARD_URL.settings())}
 					>
 						Settings

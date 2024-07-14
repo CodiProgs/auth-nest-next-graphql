@@ -9,38 +9,10 @@ import {
 import { onError } from '@apollo/client/link/error'
 import toast from 'react-hot-toast'
 
-import {
-	getAccessToken,
-	removeFromStorage,
-	saveTokenStorage
-} from '@/services/auth-token.service'
+import { authService } from '@/services/auth.service'
+import { tokenService } from '@/services/token.service'
 
 import { SERVER_URL } from '@/config/api.config'
-
-import {
-	GetNewTokensDocument,
-	GetNewTokensMutation,
-	LogoutDocument,
-	LogoutMutation
-} from '@/gql/graphql'
-
-const getNetToken = async () => {
-	const { data } = await client.mutate<GetNewTokensMutation>({
-		mutation: GetNewTokensDocument
-	})
-
-	const token = data?.getNewTokens
-	saveTokenStorage(token || '')
-
-	return token
-}
-
-const logout = async () => {
-	await client.mutate<LogoutMutation>({ mutation: LogoutDocument })
-	removeFromStorage()
-
-	//push to auth page
-}
 
 const errorLink = onError(
 	({ networkError, graphQLErrors, operation, forward }) => {
@@ -49,8 +21,8 @@ const errorLink = onError(
 			for (const err of graphQLErrors) {
 				if (err.extensions?.code === '401') {
 					return new Observable(observer => {
-						// убрать это в сервис
-						getNetToken()
+						authService
+							.getNewToken()
 							.then(token => {
 								operation.setContext((previousContext: any) => ({
 									headers: {
@@ -67,7 +39,7 @@ const errorLink = onError(
 					})
 				}
 				if (err.extensions?.logout) {
-					logout()
+					authService.logout()
 				}
 			}
 		}
@@ -80,7 +52,7 @@ const httpLink = createHttpLink({
 })
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-	const token = getAccessToken()
+	const token = tokenService.get()
 
 	operation.setContext({
 		headers: {
