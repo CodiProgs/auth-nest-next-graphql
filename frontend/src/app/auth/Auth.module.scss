@@ -1,11 +1,15 @@
 .wrapper {
-	@apply flex items-center justify-center h-screen;
+	@apply flex items-center justify-center h-[70vh];
 
 	> .content {
 		@apply p-8 bg-soft_bg w-1/3;
 
 		:global(.dark) & {
 			@apply bg-dark_soft_bg;
+		}
+
+		> .logo {
+			@apply mb-8 text-2xl;
 		}
 
 		> .heading {

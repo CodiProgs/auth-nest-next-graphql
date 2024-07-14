@@ -1,0 +1,43 @@
+.user {
+	@apply relative;
+}
+
+.loader {
+	@apply size-4;
+}
+
+.toggle {
+	@apply max-w-[100px] text-ellipsis overflow-hidden;
+}
+
+.menu {
+	@apply absolute right-0 z-50 bg-soft_bg rounded-lg shadow-lg min-w-48 py-2 mt-2;
+
+	:global(.dark) & {
+		@apply bg-dark_soft_bg;
+	}
+
+	.item {
+		@apply text-gray-700 flex items-center transition-colors duration-300;
+
+		:global(.dark) & {
+			@apply text-gray-300;
+		}
+
+		&:hover {
+			@apply bg-gray-200;
+
+			:global(.dark) & {
+				@apply bg-gray-700;
+			}
+		}
+
+		.icon {
+			@apply mr-3 size-5;
+		}
+
+		> .link {
+			@apply px-4 py-2 w-full flex items-center;
+		}
+	}
+}

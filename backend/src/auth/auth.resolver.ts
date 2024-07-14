@@ -45,11 +45,12 @@ export class AuthResolver {
 
 		if (!refreshToken)
 			throw new BadRequestException({
-				auth: 'Your session has expired. Log in again'
+				auth: 'You are not authenticated'
 			})
+		this.authService.removeRefreshTokenFromResponse(context.res)
 
 		const { accessToken, refreshToken: newRefreshToken } =
-			await this.authService.getNewTokens(refreshToken, context.res)
+			await this.authService.getNewTokens(refreshToken)
 		this.authService.addRefreshTokenToResponse(context.res, newRefreshToken)
 
 		return accessToken

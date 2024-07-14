@@ -1,5 +1,5 @@
 .wrapper {
-	@apply h-screen flex items-center justify-center;
+	@apply h-[70vh] flex items-center justify-center;
 
 	> .content {
 		@apply p-8 bg-soft_bg w-1/3;

@@ -1,10 +1,15 @@
 'use client'
 
-import { FC, useState } from 'react'
+import Link from 'next/link'
+import React, { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Button from '@/components/ui/button/Button'
 import Heading from '@/components/ui/heading/Heading'
+
+import { SITE_NAME } from '@/constants/seo.constant'
+
+import { PUBLIC_URL } from '@/config/url.config'
 
 import styles from './Auth.module.scss'
 import AuthFields from './AuthFields'
@@ -40,6 +45,9 @@ const Auth: FC = () => {
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.content}>
+				<div className={styles.logo}>
+					<Link href={PUBLIC_URL.home()}>{SITE_NAME}</Link>
+				</div>
 				<Heading className={styles.heading}>
 					{isLogin ? 'Login' : 'Register'}
 				</Heading>

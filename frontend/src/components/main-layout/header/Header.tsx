@@ -3,30 +3,27 @@
 import Link from 'next/link'
 import { FC } from 'react'
 
-import Loader from '@/components/ui/Loader'
+import { PUBLIC_URL } from '@/config/url.config'
 
-import { DASHBOARD_URL, PUBLIC_URL } from '@/config/url.config'
-
-import { useProfile } from '@/hooks/useProfile'
+import styles from './Header.module.scss'
+import UserMenu from './user-menu/UserMenu'
 
 interface IHeader {
-	refreshToken?: string
+	isAuth: boolean
 }
 
-const Header: FC<IHeader> = ({ refreshToken }) => {
-	const { user, loading } = useProfile(refreshToken)
-
+const Header: FC<IHeader> = ({ isAuth }) => {
 	return (
-		<div className='h-14 flex items-center justify-between'>
+		<div className={styles.header}>
 			<Link href={PUBLIC_URL.home()}>Home</Link>
-			{loading ? (
-				<Loader className='size-4' />
+			{isAuth ? (
+				<UserMenu />
 			) : (
 				<Link
-					className='hover:text-primary transition-colors duration-300'
-					href={user ? DASHBOARD_URL.home() : PUBLIC_URL.auth()}
+					className={styles.link}
+					href={PUBLIC_URL.auth()}
 				>
-					{user ? user.user.name : 'login'}
+					login
 				</Link>
 			)}
 		</div>

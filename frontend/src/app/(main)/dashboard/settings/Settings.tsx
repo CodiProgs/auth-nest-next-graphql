@@ -14,7 +14,7 @@ import { useSettings } from './useSettings'
 import { UpdateUserDto } from '@/gql/graphql'
 
 const Settings: FC = () => {
-	const { user, loading: loadingProfile } = useProfile()
+	const { user } = useProfile(true)
 
 	const {
 		register,

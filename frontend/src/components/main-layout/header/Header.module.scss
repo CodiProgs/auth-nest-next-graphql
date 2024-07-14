@@ -1,0 +1,7 @@
+.header {
+	@apply h-14 flex items-center justify-between;
+
+	> .link {
+		@apply hover:text-primary transition-colors duration-300;
+	}
+}

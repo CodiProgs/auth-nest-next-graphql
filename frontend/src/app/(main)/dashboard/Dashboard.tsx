@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 
 import Loader from '@/components/ui/Loader'
 import Button from '@/components/ui/button/Button'
@@ -9,16 +9,16 @@ import Heading from '@/components/ui/heading/Heading'
 
 import { DASHBOARD_URL } from '@/config/url.config'
 
+import { useLogout } from '@/hooks/useLogout'
 import { useProfile } from '@/hooks/useProfile'
 
 import styles from './Dashboard.module.scss'
-import { useLogout } from './useLogout'
 
 const Dashboard: FC = () => {
 	const { push } = useRouter()
-
-	const { user, loading } = useProfile(push)
 	const { logout } = useLogout()
+
+	const { user, loading } = useProfile(true, push)
 
 	return (
 		<div className={styles.wrapper}>

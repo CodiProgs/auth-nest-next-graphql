@@ -14,7 +14,7 @@ export const useLogout = () => {
 	const logout = async () => {
 		await mutate()
 		tokenService.remove()
-		push(PUBLIC_URL.auth())
+		push(PUBLIC_URL.home())
 	}
 
 	return { logout }

@@ -7,11 +7,12 @@ import styles from './MainLayout.module.scss'
 import Header from './header/Header'
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
-	const cookie = cookies()
-	const refreshToken = cookie.get(EnumTokens.REFRESH_TOKEN)?.value // передать в useProfile
+	const cookiesList = cookies()
+	const refreshToken = cookiesList.get(EnumTokens.REFRESH_TOKEN)
+
 	return (
 		<div className={styles.layout}>
-			<Header refreshToken={refreshToken} />
+			<Header isAuth={!!refreshToken} />
 			<main>{children}</main>
 		</div>
 	)

@@ -3,9 +3,9 @@
 }
 
 .default {
-	@apply bg-primary/80;
+	@apply bg-primary/80 text-white;
 }
 
 .outline {
-	@apply border border-primary;
+	@apply border border-primary text-primary hover:text-white;
 }
