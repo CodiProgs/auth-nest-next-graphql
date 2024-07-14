@@ -2,6 +2,8 @@ import { ApolloError } from '@apollo/client'
 import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import toast from 'react-hot-toast'
 
+import { tokenService } from '@/services/token.service'
+
 /**
  * Handles authentication errors from GraphQL operations.
  *
@@ -18,6 +20,7 @@ export const onAuthError = (
 ) => {
 	const authError = error.graphQLErrors?.[0].extensions?.auth as string
 	if (authError) {
+		tokenService.remove()
 		toast.error(authError)
 		if (push) push('/auth')
 	}

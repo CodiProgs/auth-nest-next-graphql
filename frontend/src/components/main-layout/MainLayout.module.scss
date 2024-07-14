@@ -1,0 +1,7 @@
+.layout {
+	@apply max-w-7xl mx-auto px-4;
+
+	> main {
+		@apply pt-4;
+	}
+}

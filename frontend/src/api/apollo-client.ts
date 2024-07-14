@@ -38,9 +38,6 @@ const errorLink = onError(
 							})
 					})
 				}
-				if (err.extensions?.logout) {
-					authService.logout()
-				}
 			}
 		}
 	}

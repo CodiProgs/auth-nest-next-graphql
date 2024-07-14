@@ -1,12 +1,7 @@
 import { client } from '@/api/apollo-client'
 
 import { tokenService } from './token.service'
-import {
-	GetNewTokensDocument,
-	GetNewTokensMutation,
-	LogoutDocument,
-	LogoutMutation
-} from '@/gql/graphql'
+import { GetNewTokensDocument, GetNewTokensMutation } from '@/gql/graphql'
 
 class AuthService {
 	async getNewToken() {
@@ -18,21 +13,6 @@ class AuthService {
 		tokenService.save(token || '')
 
 		return token
-	}
-
-	async logout() {
-		await client.mutate<LogoutMutation>({
-			mutation: LogoutDocument,
-			update(cache) {
-				const normalizedId = cache.identify({
-					id: 'id', //todo!
-					__typename: 'UserType'
-				})
-				cache.evict({ id: normalizedId })
-				cache.gc()
-			}
-		})
-		tokenService.remove()
 	}
 }
 

@@ -42,16 +42,14 @@ export class AuthResolver {
 	async getNewTokens(@Context() context: { res: Response; req: Request }) {
 		const refreshToken =
 			context.req.cookies[this.authService.REFRESH_TOKEN_NAME]
-		throw new BadRequestException({
-			logout: 'Your session has expired. Log in again'
-		})
+
 		if (!refreshToken)
 			throw new BadRequestException({
-				logout: 'Your session has expired. Log in again'
+				auth: 'Your session has expired. Log in again'
 			})
 
 		const { accessToken, refreshToken: newRefreshToken } =
-			await this.authService.getNewTokens(refreshToken)
+			await this.authService.getNewTokens(refreshToken, context.res)
 		this.authService.addRefreshTokenToResponse(context.res, newRefreshToken)
 
 		return accessToken

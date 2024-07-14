@@ -46,18 +46,24 @@ export class AuthService {
 		return { user, ...tokens }
 	}
 
-	async getNewTokens(refreshToken: string) {
-		const result = await this.jwtService.verifyAsync(refreshToken)
-		if (!result)
+	async getNewTokens(refreshToken: string, res: Response) {
+		let result: any
+		try {
+			result = await this.jwtService.verifyAsync(refreshToken)
+		} catch (error) {
+			this.removeRefreshTokenFromResponse(res)
 			throw new BadRequestException({
-				logout: 'Verification failed. Log in again.'
+				auth: 'Verification failed. Log in again.'
 			})
+		}
 
 		const user = await this.userService.getById(result.id)
-		if (!user)
+		if (!user) {
+			this.removeRefreshTokenFromResponse(res)
 			throw new NotFoundException({
-				logout: 'It seems that something went wrong. Log in again'
+				auth: 'It seems that something went wrong. Log in again'
 			})
+		}
 
 		const tokens = this.issueTokens(user.id)
 
