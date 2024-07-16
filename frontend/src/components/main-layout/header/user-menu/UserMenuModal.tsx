@@ -2,16 +2,17 @@
 
 import { LogOut, Settings, User } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { forwardRef } from 'react'
 
-import { DASHBOARD_URL } from '@/config/url.config'
+import { authService } from '@/services/auth.service'
 
-import { useLogout } from '@/hooks/useLogout'
+import { DASHBOARD_URL } from '@/config/url.config'
 
 import styles from './UserMenu.module.scss'
 
 const UserMenuModal = forwardRef<HTMLUListElement>(({}, ref) => {
-	const { logout } = useLogout()
+	const { push } = useRouter()
 
 	return (
 		<ul
@@ -40,7 +41,7 @@ const UserMenuModal = forwardRef<HTMLUListElement>(({}, ref) => {
 				<button
 					className={styles.link}
 					onClick={() => {
-						logout()
+						authService.logout(push)
 					}}
 				>
 					<LogOut className={styles.icon} />

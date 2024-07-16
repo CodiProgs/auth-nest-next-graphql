@@ -5,18 +5,18 @@ import { FC } from 'react'
 
 import { PUBLIC_URL } from '@/config/url.config'
 
+import { useAuth } from '@/hooks/useAuth'
+
 import styles from './Header.module.scss'
 import UserMenu from './user-menu/UserMenu'
 
-interface IHeader {
-	isAuth: boolean
-}
+const Header: FC = () => {
+	const { user } = useAuth()
 
-const Header: FC<IHeader> = ({ isAuth }) => {
 	return (
 		<div className={styles.header}>
 			<Link href={PUBLIC_URL.home()}>Home</Link>
-			{isAuth ? (
+			{user ? (
 				<UserMenu />
 			) : (
 				<Link

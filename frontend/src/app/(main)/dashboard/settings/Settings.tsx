@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import Button from '@/components/ui/button/Button'
 import Heading from '@/components/ui/heading/Heading'
 
-import { useProfile } from '@/hooks/useProfile'
+import { useAuth } from '@/hooks/useAuth'
 
 import styles from './Settings.module.scss'
 import SettingsFields from './SettingsFields'
@@ -14,7 +14,7 @@ import { useSettings } from './useSettings'
 import { UpdateUserDto } from '@/gql/graphql'
 
 const Settings: FC = () => {
-	const { user } = useProfile(true)
+	const { user } = useAuth()
 
 	const {
 		register,
@@ -23,7 +23,7 @@ const Settings: FC = () => {
 		formState: { errors }
 	} = useForm<UpdateUserDto>({
 		mode: 'onChange',
-		values: useMemo(() => user?.user, [user])
+		values: useMemo(() => user!, [user])
 	})
 	console.log('render')
 	const {

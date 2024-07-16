@@ -1,7 +1,15 @@
+import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+
+import { PUBLIC_URL } from '@/config/url.config'
+
 import { client } from '@/api/apollo-client'
 
 import { tokenService } from './token.service'
-import { GetNewTokensDocument, GetNewTokensMutation } from '@/gql/graphql'
+import {
+	GetNewTokensDocument,
+	GetNewTokensMutation,
+	LogoutDocument
+} from '@/gql/graphql'
 
 class AuthService {
 	async getNewToken() {
@@ -13,6 +21,15 @@ class AuthService {
 		tokenService.save(token || '')
 
 		return token
+	}
+
+	async logout(push: (href: string, options?: NavigateOptions) => void) {
+		await client.mutate({
+			mutation: LogoutDocument
+		})
+
+		tokenService.remove()
+		push(PUBLIC_URL.home())
 	}
 }
 
