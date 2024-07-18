@@ -47,6 +47,12 @@ const Auth: FC = () => {
 		authVar(true)
 	}
 
+	const toggleIsLogin = () => {
+		setIsLogin(!isLogin)
+		setErrors({})
+		reset()
+	}
+
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.content}>
@@ -78,10 +84,7 @@ const Auth: FC = () => {
 						<Button
 							variant='outline'
 							type='button'
-							onClick={() => {
-								setIsLogin(!isLogin)
-								setErrors({})
-							}}
+							onClick={() => toggleIsLogin()}
 						>
 							{isLogin ? 'Create account' : 'Login'}
 						</Button>

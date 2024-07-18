@@ -44,9 +44,7 @@ export class AuthResolver {
 			context.req.cookies[this.authService.REFRESH_TOKEN_NAME]
 
 		if (!refreshToken)
-			throw new BadRequestException({
-				auth: 'You are not authenticated'
-			})
+			throw new BadRequestException('You are not authenticated')
 		this.authService.removeRefreshTokenFromResponse(context.res)
 
 		const { accessToken, refreshToken: newRefreshToken } =

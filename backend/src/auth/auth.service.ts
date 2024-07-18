@@ -51,16 +51,14 @@ export class AuthService {
 		try {
 			result = await this.jwtService.verifyAsync(refreshToken)
 		} catch (error) {
-			throw new BadRequestException({
-				auth: 'Verification failed. Log in again.'
-			})
+			throw new BadRequestException('Verification failed. Log in again.')
 		}
 
 		const user = await this.userService.getById(result.id)
 		if (!user)
-			throw new NotFoundException({
-				auth: 'It seems that something went wrong. Log in again'
-			})
+			throw new NotFoundException(
+				'It seems that something went wrong. Log in again'
+			)
 
 		const tokens = this.issueTokens(user.id)
 

@@ -14,7 +14,7 @@ const Providers: FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<ApolloClientProvider>
 			<AuthProvider isAuth={isAuth}>
-				<Toaster />
+				<Toaster toastOptions={{ duration: 2500 }} />
 				{children}
 			</AuthProvider>
 		</ApolloClientProvider>

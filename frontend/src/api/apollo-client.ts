@@ -8,6 +8,7 @@ import {
 	createHttpLink,
 	from
 } from '@apollo/client'
+import { ApolloError } from '@apollo/client/errors'
 import { onError } from '@apollo/client/link/error'
 import toast from 'react-hot-toast'
 
@@ -44,7 +45,16 @@ const errorLink = onError(
 					.then(forwardOperation => {
 						forwardOperation.subscribe(observer)
 					})
-					.catch(observer.error)
+					.catch((error: ApolloError) => {
+						tokenService.remove()
+						toast.error(error.message)
+
+						setTimeout(() => {
+							window.location.reload()
+						}, 2500)
+
+						observer.error(error)
+					})
 			})
 		}
 	}

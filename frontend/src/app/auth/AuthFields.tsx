@@ -35,6 +35,7 @@ const AuthFields: FC<IAuthField> = ({
 				/>
 			)}
 			<Field
+				type='email'
 				placeholder='Email'
 				{...register('email', {
 					required: 'Required',
@@ -44,6 +45,7 @@ const AuthFields: FC<IAuthField> = ({
 			/>
 			<Field
 				placeholder='Password'
+				type='password'
 				{...register('password', {
 					required: 'Required',
 					minLength: { value: 6, message: 'Min 6 length' },
