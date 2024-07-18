@@ -2,7 +2,9 @@ import {
 	ApolloClient,
 	ApolloLink,
 	InMemoryCache,
+	NextLink,
 	Observable,
+	Operation,
 	createHttpLink,
 	from
 } from '@apollo/client'
@@ -14,7 +16,7 @@ import { tokenService } from '@/services/token.service'
 
 import { SERVER_URL } from '@/config/api.config'
 
-const handleAuthError = async (operation: any, forward: any) => {
+const handleAuthError = async (operation: Operation, forward: NextLink) => {
 	try {
 		const token = await authService.getNewTokens()
 		operation.setContext(({ headers = {} }) => ({
@@ -32,14 +34,15 @@ const handleAuthError = async (operation: any, forward: any) => {
 const errorLink = onError(
 	({ networkError, graphQLErrors, operation, forward }) => {
 		if (networkError) toast.error(networkError.message)
-		if (
-			graphQLErrors &&
-			graphQLErrors.some(err => err.extensions?.code === '401')
-		) {
+
+		const isAuthError = graphQLErrors?.some(
+			err => err.extensions?.code === '401'
+		)
+		if (isAuthError) {
 			return new Observable(observer => {
 				handleAuthError(operation, forward)
-					.then(forward => {
-						forward.subscribe(observer)
+					.then(forwardOperation => {
+						forwardOperation.subscribe(observer)
 					})
 					.catch(observer.error)
 			})
