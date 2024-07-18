@@ -1,0 +1,5 @@
+mutation UpdateUser($updateUserInput: UpdateUserDto!) {
+	user: updateUser(updateUserInput: $updateUserInput) {
+		...userFields
+	}
+}

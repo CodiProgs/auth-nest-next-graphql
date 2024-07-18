@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-import Heading from '@/components/ui/heading/Heading'
+import { Heading } from '@/components/ui/heading/Heading'
 
 import { PUBLIC_URL } from '@/config/url.config'
 

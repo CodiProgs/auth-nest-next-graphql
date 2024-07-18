@@ -11,47 +11,56 @@ import { DASHBOARD_URL } from '@/config/url.config'
 
 import styles from './UserMenu.module.scss'
 
-const UserMenuModal = forwardRef<HTMLUListElement>(({}, ref) => {
-	const { push } = useRouter()
+interface IUserMenuModal {
+	setIsShow: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-	return (
-		<ul
-			ref={ref}
-			className={styles.menu}
-		>
-			<li className={styles.item}>
-				<Link
-					href={DASHBOARD_URL.home()}
-					className={styles.link}
-				>
-					<User className={styles.icon} />
-					<span>Profile</span>
-				</Link>
-			</li>
-			<li className={styles.item}>
-				<Link
-					href={DASHBOARD_URL.settings()}
-					className={styles.link}
-				>
-					<Settings className={styles.icon} />
-					<span>Settings</span>
-				</Link>
-			</li>
-			<li className={styles.item}>
-				<button
-					className={styles.link}
-					onClick={() => {
-						authService.logout(push)
-					}}
-				>
-					<LogOut className={styles.icon} />
-					<span>Logout</span>
-				</button>
-			</li>
-		</ul>
-	)
-})
+const UserMenuModal = forwardRef<HTMLUListElement, IUserMenuModal>(
+	({ setIsShow }, ref) => {
+		const { push } = useRouter()
+
+		return (
+			<ul
+				ref={ref}
+				className={styles.menu}
+			>
+				<li className={styles.item}>
+					<Link
+						onClick={() => setIsShow(false)}
+						href={DASHBOARD_URL.home()}
+						className={styles.link}
+					>
+						<User className={styles.icon} />
+						<span>Profile</span>
+					</Link>
+				</li>
+				<li className={styles.item}>
+					<Link
+						onClick={() => setIsShow(false)}
+						href={DASHBOARD_URL.settings()}
+						className={styles.link}
+					>
+						<Settings className={styles.icon} />
+						<span>Settings</span>
+					</Link>
+				</li>
+				<li className={styles.item}>
+					<button
+						className={styles.link}
+						onClick={() => {
+							authService.logout(push)
+							setIsShow(false)
+						}}
+					>
+						<LogOut className={styles.icon} />
+						<span>Logout</span>
+					</button>
+				</li>
+			</ul>
+		)
+	}
+)
 
 UserMenuModal.displayName = 'UserMenuModal'
 
-export default UserMenuModal
+export { UserMenuModal }

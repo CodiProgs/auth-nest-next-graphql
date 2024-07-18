@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { UseFormReset } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-import { UpdateUserDto, useUpdateUserMutation } from '@/gql/graphql'
+import { UpdateUserDto, useUpdateUserMutation } from '@/__generated__/output'
 
 export const useSettings = (reset: UseFormReset<UpdateUserDto>) => {
 	const [errors, setErrors] = useState<GraphQLErrorExtensions>({})

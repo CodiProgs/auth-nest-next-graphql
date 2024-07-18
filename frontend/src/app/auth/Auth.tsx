@@ -4,17 +4,19 @@ import Link from 'next/link'
 import React, { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import Button from '@/components/ui/button/Button'
-import Heading from '@/components/ui/heading/Heading'
+import { Button } from '@/components/ui/form-elements/button/Button'
+import { Heading } from '@/components/ui/heading/Heading'
 
 import { SITE_NAME } from '@/constants/seo.constant'
 
 import { PUBLIC_URL } from '@/config/url.config'
 
+import { authVar } from '@/stores/store'
+
 import styles from './Auth.module.scss'
-import AuthFields from './AuthFields'
+import { AuthFields } from './AuthFields'
 import { useAuth } from './useAuth'
-import { LoginDto, RegisterDto } from '@/gql/graphql'
+import { LoginDto, RegisterDto } from '@/__generated__/output'
 
 const Auth: FC = () => {
 	const [isLogin, setIsLogin] = useState(true)
@@ -38,8 +40,11 @@ const Auth: FC = () => {
 	const onSubmit: SubmitHandler<RegisterDto & LoginDto> = data => {
 		setErrors({})
 		mutate({
-			variables: data
+			variables: {
+				authInput: data
+			}
 		})
+		authVar(true)
 	}
 
 	return (
@@ -87,4 +92,4 @@ const Auth: FC = () => {
 	)
 }
 
-export default Auth
+export { Auth }

@@ -1,42 +1,29 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { FC, PropsWithChildren, useEffect } from 'react'
+
+import { tokenService } from '@/services/token.service'
+
+import { authVar } from '@/stores/store'
 
 import { useAuth } from '@/hooks/useAuth'
 
-import { onAuthError } from '@/utils/authErrorHandler.util'
-
-import { useProfileLazyQuery } from '@/gql/graphql'
-
 interface IAuthProvider {
-	refreshToken?: string
+	isAuth: boolean
 }
 
 const AuthProvider: FC<PropsWithChildren<IAuthProvider>> = ({
 	children,
-	refreshToken
+	isAuth
 }) => {
-	const { push } = useRouter()
-
-	const { user, userVars } = useAuth()
-	const [getProfile] = useProfileLazyQuery({
-		onError(error) {
-			onAuthError(error, push)
-		}
-	})
+	// const { authVar } = useAuth()
 
 	useEffect(() => {
-		if (!user) {
-			if (refreshToken) {
-				getProfile().then(({ data }) => {
-					userVars(data?.user)
-				})
-			}
-		}
-	}, [refreshToken, user, userVars])
+		if (!isAuth) tokenService.remove()
+		authVar(isAuth)
+	}, [isAuth])
 
-	return children
+	return <>{children}</>
 }
 
-export default AuthProvider
+export { AuthProvider }

@@ -2,11 +2,11 @@ import { GraphQLErrorExtensions } from 'graphql'
 import { FC } from 'react'
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
 
-import Field from '@/components/ui/field/Field'
+import { Field } from '@/components/ui/form-elements/field/Field'
 
 import styles from './Auth.module.scss'
 import { validEmail } from './valid-email'
-import { LoginDto, RegisterDto } from '@/gql/graphql'
+import { LoginDto, RegisterDto } from '@/__generated__/output'
 
 interface IAuthField {
 	isLogin: boolean
@@ -55,4 +55,4 @@ const AuthFields: FC<IAuthField> = ({
 	)
 }
 
-export default AuthFields
+export { AuthFields }

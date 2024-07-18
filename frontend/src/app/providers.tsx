@@ -2,22 +2,22 @@ import { cookies } from 'next/headers'
 import { FC, PropsWithChildren } from 'react'
 import { Toaster } from 'react-hot-toast'
 
-import { EnumTokens } from '@/services/token.service'
+import { ApolloClientProvider } from '@/providers/ApolloClientProvider'
+import { AuthProvider } from '@/providers/AuthProvider'
 
-import ApolloWrapper from '@/providers/ApolloWrapper'
-import AuthProvider from '@/providers/AuthProvider'
+import { EnumTokens } from '@/services/token.service'
 
 const Providers: FC<PropsWithChildren> = ({ children }) => {
 	const cookiesList = cookies()
-	const refreshToken = cookiesList.get(EnumTokens.REFRESH_TOKEN)?.value
+	const isAuth = !!cookiesList.get(EnumTokens.REFRESH_TOKEN)
 
 	return (
-		<ApolloWrapper>
-			<AuthProvider refreshToken={refreshToken}>
+		<ApolloClientProvider>
+			<AuthProvider isAuth={isAuth}>
 				<Toaster />
 				{children}
 			</AuthProvider>
-		</ApolloWrapper>
+		</ApolloClientProvider>
 	)
 }
 

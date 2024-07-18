@@ -26,4 +26,4 @@ const Button: FC<PropsWithChildren<IButton>> = ({
 	)
 }
 
-export default Button
+export { Button }

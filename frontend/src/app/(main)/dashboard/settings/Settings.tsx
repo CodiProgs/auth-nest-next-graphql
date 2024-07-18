@@ -1,20 +1,20 @@
 'use client'
 
-import { FC, useMemo } from 'react'
+import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import Button from '@/components/ui/button/Button'
-import Heading from '@/components/ui/heading/Heading'
+import { Button } from '@/components/ui/form-elements/button/Button'
+import { Heading } from '@/components/ui/heading/Heading'
 
-import { useAuth } from '@/hooks/useAuth'
+import { useProfile } from '@/hooks/useProfile'
 
 import styles from './Settings.module.scss'
-import SettingsFields from './SettingsFields'
+import { SettingsFields } from './SettingsFields'
 import { useSettings } from './useSettings'
-import { UpdateUserDto } from '@/gql/graphql'
+import { UpdateUserDto } from '@/__generated__/output'
 
 const Settings: FC = () => {
-	const { user } = useAuth()
+	const { user } = useProfile()
 
 	const {
 		register,
@@ -23,9 +23,12 @@ const Settings: FC = () => {
 		formState: { errors }
 	} = useForm<UpdateUserDto>({
 		mode: 'onChange',
-		values: useMemo(() => user!, [user])
+		values: {
+			email: user?.email || '',
+			name: user?.name || ''
+		}
 	})
-	console.log('render')
+
 	const {
 		mutate,
 		loading,
@@ -36,7 +39,9 @@ const Settings: FC = () => {
 	const onSubmit: SubmitHandler<UpdateUserDto> = data => {
 		setErrors({})
 		mutate({
-			variables: data
+			variables: {
+				updateUserInput: data
+			}
 		})
 	}
 
@@ -67,4 +72,4 @@ const Settings: FC = () => {
 	)
 }
 
-export default Settings
+export { Settings }

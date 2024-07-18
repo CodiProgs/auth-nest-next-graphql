@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react'
 
 import styles from './MainLayout.module.scss'
-import Header from './header/Header'
+import { Header } from './header/Header'
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
 	return (
@@ -12,4 +12,4 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
 	)
 }
 
-export default MainLayout
+export { MainLayout }

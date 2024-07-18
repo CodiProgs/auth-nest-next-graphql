@@ -12,9 +12,14 @@ class TokenService {
 	}
 
 	save(accessToken: string) {
+		const expires = new Date()
+		expires.setTime(expires.getTime() + 1 * 60 * 60 * 1000)
+
 		Cookies.set(EnumTokens.ACCESS_TOKEN, accessToken, {
+			expires,
 			sameSite: 'Lax',
-			expires: 1
+			path: '/',
+			secure: true
 		})
 	}
 

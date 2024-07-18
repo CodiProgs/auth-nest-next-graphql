@@ -4,8 +4,8 @@ export const PUBLIC_URL = {
 }
 
 export const DASHBOARD_URL = {
-	root: (url = '') => `/dashboard${url ? '/' + url : ''}`,
+	root: (url = '') => `/dashboard${url}`,
 
 	home: () => DASHBOARD_URL.root(),
-	settings: () => DASHBOARD_URL.root('settings')
+	settings: () => DASHBOARD_URL.root('/settings')
 }

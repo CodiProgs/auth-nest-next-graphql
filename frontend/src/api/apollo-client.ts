@@ -14,31 +14,35 @@ import { tokenService } from '@/services/token.service'
 
 import { SERVER_URL } from '@/config/api.config'
 
+const handleAuthError = async (operation: any, forward: any) => {
+	try {
+		const token = await authService.getNewTokens()
+		operation.setContext(({ headers = {} }) => ({
+			headers: {
+				...headers,
+				authorization: `Bearer ${token}`
+			}
+		}))
+		return forward(operation)
+	} catch (error) {
+		throw error
+	}
+}
+
 const errorLink = onError(
 	({ networkError, graphQLErrors, operation, forward }) => {
 		if (networkError) toast.error(networkError.message)
-		if (graphQLErrors) {
-			for (const err of graphQLErrors) {
-				if (err.extensions?.code === '401') {
-					return new Observable(observer => {
-						authService
-							.getNewToken()
-							.then(token => {
-								operation.setContext((previousContext: any) => ({
-									headers: {
-										...previousContext.headers,
-										authorization: `Bearer ${token}`
-									}
-								}))
-								const forward$ = forward(operation)
-								forward$.subscribe(observer)
-							})
-							.catch(error => {
-								observer.error(error)
-							})
+		if (
+			graphQLErrors &&
+			graphQLErrors.some(err => err.extensions?.code === '401')
+		) {
+			return new Observable(observer => {
+				handleAuthError(operation, forward)
+					.then(forward => {
+						forward.subscribe(observer)
 					})
-				}
-			}
+					.catch(observer.error)
+			})
 		}
 	}
 )
@@ -50,12 +54,13 @@ const httpLink = createHttpLink({
 
 const authMiddleware = new ApolloLink((operation, forward) => {
 	const token = tokenService.get()
-
-	operation.setContext({
-		headers: {
-			Authorization: token ? `Bearer ${token}` : ''
-		}
-	})
+	if (token) {
+		operation.setContext({
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		})
+	}
 	return forward(operation)
 })
 

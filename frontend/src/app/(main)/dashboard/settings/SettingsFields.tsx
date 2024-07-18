@@ -2,11 +2,11 @@ import { GraphQLErrorExtensions } from 'graphql'
 import { FC } from 'react'
 import { FieldErrors, UseFormRegister } from 'react-hook-form'
 
-import Field from '@/components/ui/field/Field'
+import { Field } from '@/components/ui/form-elements/field/Field'
 
 import styles from './Settings.module.scss'
+import { UpdateUserDto } from '@/__generated__/output'
 import { validEmail } from '@/app/auth/valid-email'
-import { UpdateUserDto } from '@/gql/graphql'
 
 interface ISettingsFields {
 	register: UseFormRegister<UpdateUserDto>
@@ -42,4 +42,4 @@ const SettingsFields: FC<ISettingsFields> = ({
 	)
 }
 
-export default SettingsFields
+export { SettingsFields }

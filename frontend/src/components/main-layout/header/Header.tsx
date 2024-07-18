@@ -1,22 +1,31 @@
 'use client'
 
 import Link from 'next/link'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+
+import { Loader } from '@/components/ui/Loader'
 
 import { PUBLIC_URL } from '@/config/url.config'
 
 import { useAuth } from '@/hooks/useAuth'
 
 import styles from './Header.module.scss'
-import UserMenu from './user-menu/UserMenu'
+import { UserMenu } from './user-menu/UserMenu'
 
 const Header: FC = () => {
-	const { user } = useAuth()
+	const { isAuth } = useAuth()
+
+	const [isMounted, setIsMounted] = useState(false)
+	useEffect(() => {
+		setIsMounted(true)
+	}, [])
 
 	return (
 		<div className={styles.header}>
 			<Link href={PUBLIC_URL.home()}>Home</Link>
-			{user ? (
+			{!isMounted ? (
+				<Loader className={styles.loader} />
+			) : isAuth ? (
 				<UserMenu />
 			) : (
 				<Link
@@ -30,4 +39,4 @@ const Header: FC = () => {
 	)
 }
 
-export default Header
+export { Header }

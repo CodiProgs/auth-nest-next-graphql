@@ -1,7 +1,5 @@
 query Profile {
 	user: profile {
-		id
-		name
-		email
+		...userFields
 	}
 }

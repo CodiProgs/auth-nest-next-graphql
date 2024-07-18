@@ -12,4 +12,4 @@ const Loader: FC<ILoader> = ({ className }) => {
 	)
 }
 
-export default Loader
+export { Loader }

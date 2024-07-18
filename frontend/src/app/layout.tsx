@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Open_Sans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 
 import { SITE_DESCRIPTION, SITE_NAME } from '@/constants/seo.constant'
 
@@ -7,11 +7,7 @@ import '../assets/styles/globals.scss'
 
 import Providers from './providers'
 
-const font = Open_Sans({
-	subsets: ['latin'],
-	weight: ['400', '600'],
-	style: ['normal']
-})
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
 	title: {
@@ -20,8 +16,7 @@ export const metadata: Metadata = {
 	},
 	description: SITE_DESCRIPTION,
 	openGraph: {
-		type: 'website',
-		siteName: SITE_NAME
+		type: 'website'
 	}
 }
 
@@ -31,11 +26,8 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html
-			lang='en'
-			className='dark'
-		>
-			<body className={font.className}>
+		<html lang='en'>
+			<body className={inter.className}>
 				<Providers>{children}</Providers>
 			</body>
 		</html>

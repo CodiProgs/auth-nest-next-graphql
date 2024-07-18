@@ -16,7 +16,7 @@ import {
 	RegisterDocument,
 	RegisterDto,
 	RegisterMutation
-} from '@/gql/graphql'
+} from '@/__generated__/output'
 
 export const useAuth = (
 	isLogin: boolean,

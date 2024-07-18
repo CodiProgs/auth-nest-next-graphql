@@ -27,4 +27,4 @@ const Field = forwardRef<HTMLInputElement, IField>(
 
 Field.displayName = 'Field'
 
-export default Field
+export { Field }
