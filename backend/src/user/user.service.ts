@@ -3,6 +3,8 @@ import { PrismaService } from 'src/prisma.service'
 import { hash } from 'argon2'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { RegisterDto } from 'src/auth/dto/register.dto'
+import { Provider } from '@prisma/client'
+import { LoginSocialDto } from 'src/auth/dto/social-login.dto'
 
 @Injectable()
 export class UserService {
@@ -14,9 +16,9 @@ export class UserService {
 		})
 	}
 
-	async getByEmail(email: string) {
+	async getByEmailAndProvider(email: string, provider: Provider = 'LOCAL') {
 		return this.prisma.user.findUnique({
-			where: { email }
+			where: { email_provider: { email, provider } }
 		})
 	}
 
@@ -25,6 +27,16 @@ export class UserService {
 			data: {
 				...dto,
 				password: await hash(dto.password)
+			}
+		})
+	}
+
+	async createSocial(dto: LoginSocialDto, provider: Provider) {
+		return await this.prisma.user.create({
+			data: {
+				...dto,
+				provider,
+				password: null
 			}
 		})
 	}

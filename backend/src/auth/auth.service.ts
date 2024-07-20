@@ -9,8 +9,9 @@ import { UserService } from 'src/user/user.service'
 import { LoginDto } from './dto/login.dto'
 import { verify } from 'argon2'
 import { Response } from 'express'
-import { User } from '@prisma/client'
 import { RegisterDto } from './dto/register.dto'
+import { Provider, User } from '@prisma/client'
+import { LoginSocialDto } from './dto/social-login.dto'
 
 @Injectable()
 export class AuthService {
@@ -39,6 +40,18 @@ export class AuthService {
 				throw new ConflictException({ form: 'Email is already taken' })
 			}
 			throw error
+		}
+
+		const tokens = this.issueTokens(user.id)
+
+		return { user, ...tokens }
+	}
+
+	async loginSocial(dto: LoginSocialDto, provider: Provider) {
+		let user = await this.userService.getByEmailAndProvider(dto.email, provider)
+
+		if (!user) {
+			user = await this.userService.createSocial(dto, provider)
 		}
 
 		const tokens = this.issueTokens(user.id)
@@ -82,7 +95,7 @@ export class AuthService {
 	}
 
 	private async validateUser(dto: LoginDto) {
-		const user = await this.userService.getByEmail(dto.email)
+		const user = await this.userService.getByEmailAndProvider(dto.email)
 		if (!user)
 			throw new NotFoundException({ form: 'Your email is not registered yet' })
 

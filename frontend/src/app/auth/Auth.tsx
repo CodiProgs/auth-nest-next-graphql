@@ -15,6 +15,7 @@ import { authVar } from '@/stores/store'
 
 import styles from './Auth.module.scss'
 import { AuthFields } from './AuthFields'
+import { AuthSocial } from './AuthSocial'
 import { useAuth } from './useAuth'
 import { LoginDto, RegisterDto } from '@/__generated__/output'
 
@@ -87,6 +88,7 @@ const Auth: FC = () => {
 						</Button>
 					</div>
 				</form>
+				<AuthSocial />
 			</div>
 		</div>
 	)

@@ -13,8 +13,17 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   name     String
-  email    String @unique
-  password String
+  email    String
+  password String?
 
+  provider Provider @default(LOCAL)
+
+  @@unique([email, provider])
   @@map("user")
+}
+
+enum Provider {
+  LOCAL
+  GOOGLE
+  GITHUB
 }

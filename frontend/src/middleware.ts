@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { DASHBOARD_URL, PUBLIC_URL } from './config/url.config'
-import { EnumTokens, tokenService } from './services/token.service'
+import { EnumTokens } from './services/token.service'
 
 export async function middleware(request: NextRequest) {
 	const refreshToken = request.cookies.get(EnumTokens.REFRESH_TOKEN)?.value
@@ -23,5 +23,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-	matcher: ['/dashboard/:path*', '/auth']
+	matcher: ['/dashboard/:path*', '/auth', '/auth/google/success']
 }
