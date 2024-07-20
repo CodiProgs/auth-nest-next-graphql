@@ -14,6 +14,7 @@ To get started with the project, follow these steps:
 
 ```sh
 git clone https://github.com/CodiProgs/auth-nest-next-graphql.git
+git checkout feature/oauth-integration
 cd auth-nest-next-graphql
 ```
 
