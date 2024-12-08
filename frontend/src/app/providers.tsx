@@ -7,8 +7,8 @@ import { AuthProvider } from '@/providers/AuthProvider'
 
 import { EnumTokens } from '@/services/token.service'
 
-const Providers: FC<PropsWithChildren> = ({ children }) => {
-	const cookiesList = cookies()
+const Providers: FC<PropsWithChildren> = async ({ children }) => {
+	const cookiesList = await cookies()
 	const isAuth = !!cookiesList.get(EnumTokens.REFRESH_TOKEN)
 
 	return (

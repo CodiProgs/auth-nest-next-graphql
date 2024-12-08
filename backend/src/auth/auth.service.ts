@@ -5,11 +5,11 @@ import {
 	NotFoundException
 } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { UserService } from 'src/user/user.service'
-import { LoginDto } from './dto/login.dto'
+import { User } from '@prisma/client'
 import { verify } from 'argon2'
 import { Response } from 'express'
-import { User } from '@prisma/client'
+import { UserService } from 'src/user/user.service'
+import { LoginDto } from './dto/login.dto'
 import { RegisterDto } from './dto/register.dto'
 
 @Injectable()

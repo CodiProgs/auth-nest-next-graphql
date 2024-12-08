@@ -49,10 +49,6 @@ const errorLink = onError(
 						tokenService.remove()
 						toast.error(error.message)
 
-						setTimeout(() => {
-							window.location.reload()
-						}, 2500)
-
 						observer.error(error)
 					})
 			})

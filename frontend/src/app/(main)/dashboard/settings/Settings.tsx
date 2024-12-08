@@ -19,6 +19,7 @@ const Settings: FC = () => {
 	const {
 		register,
 		reset,
+		watch,
 		handleSubmit,
 		formState: { errors }
 	} = useForm<UpdateUserDto>({
@@ -40,9 +41,18 @@ const Settings: FC = () => {
 		setErrors({})
 		mutate({
 			variables: {
-				updateUserInput: data
+				updateUserInput: {
+					email: data.email === user?.email ? undefined : data.email,
+					name: data.name === user?.name ? undefined : data.name
+				}
 			}
 		})
+	}
+
+	const isDisabled = () => {
+		const data = watch()
+
+		return data.email === user?.email && data.name === user?.name
 	}
 
 	return (
@@ -56,15 +66,15 @@ const Settings: FC = () => {
 						graphqlErrors={graphqlErrors}
 					/>
 					<>
-						{graphqlErrors?.form && (
+						{graphqlErrors?.form ? (
 							<p className={styles.error}>{graphqlErrors.form as string}</p>
-						)}
+						) : null}
 					</>
 					<Button
 						type='submit'
-						disabled={loading}
+						disabled={loading || isDisabled()}
 					>
-						Update
+						{loading ? 'Loading...' : 'Update'}
 					</Button>
 				</form>
 			</div>

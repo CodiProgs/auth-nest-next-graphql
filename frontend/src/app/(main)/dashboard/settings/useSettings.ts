@@ -14,8 +14,9 @@ export const useSettings = (reset: UseFormReset<UpdateUserDto>) => {
 			toast.success('Success')
 		},
 		onError(error) {
-			const extensions = error?.graphQLErrors?.[0]?.extensions
-			setErrors(extensions)
+			if (error?.graphQLErrors?.[0]?.extensions) {
+				setErrors(error.graphQLErrors[0].extensions)
+			}
 		}
 	})
 

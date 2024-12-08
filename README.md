@@ -1,10 +1,10 @@
-# Fullstack auth
+# Fullstack auth v1.2
 
 This project is a full implementation of authentication using:
+
 - Nest.js for the backend
 - Next.js for the frontend
 - GraphQL.
-
 
 ## Getting Started
 
@@ -33,11 +33,13 @@ yarn install
 ```
 
 Apply database migrations using Prisma:
+
 ```sh
 prisma db push
 ```
 
 Start the server in development mode:
+
 ```sh
 yarn start:dev
 ```
@@ -57,6 +59,7 @@ yarn install
 ```
 
 Start the development server:
+
 ```sh
 yarn dev
 ```

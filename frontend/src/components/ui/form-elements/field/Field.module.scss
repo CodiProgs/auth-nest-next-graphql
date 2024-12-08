@@ -1,5 +1,6 @@
 .field {
-	> label {
+	> .label {
+		@apply cursor-pointer;
 		> span {
 			@apply text-gray-500;
 		}

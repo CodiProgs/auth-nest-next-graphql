@@ -11,7 +11,7 @@ const Field = forwardRef<HTMLInputElement, IField>(
 	({ placeholder, error, className, ...rest }, ref) => {
 		return (
 			<div className={cn(styles.field, className)}>
-				<label>
+				<label className={styles.label}>
 					<span>{placeholder}</span>
 					<input
 						ref={ref}

@@ -7,7 +7,7 @@ import { forwardRef } from 'react'
 
 import { authService } from '@/services/auth.service'
 
-import { DASHBOARD_URL } from '@/config/url.config'
+import { dashboardPages } from '@/config/pages.config'
 
 import styles from './UserMenu.module.scss'
 
@@ -27,7 +27,7 @@ const UserMenuModal = forwardRef<HTMLUListElement, IUserMenuModal>(
 				<li className={styles.item}>
 					<Link
 						onClick={() => setIsShow(false)}
-						href={DASHBOARD_URL.home()}
+						href={dashboardPages.home}
 						className={styles.link}
 					>
 						<User className={styles.icon} />
@@ -37,7 +37,7 @@ const UserMenuModal = forwardRef<HTMLUListElement, IUserMenuModal>(
 				<li className={styles.item}>
 					<Link
 						onClick={() => setIsShow(false)}
-						href={DASHBOARD_URL.settings()}
+						href={dashboardPages.settings}
 						className={styles.link}
 					>
 						<Settings className={styles.icon} />

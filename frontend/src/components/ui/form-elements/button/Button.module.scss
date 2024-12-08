@@ -1,5 +1,5 @@
 .button {
-	@apply px-4 h-9 rounded-md hover:bg-primary transition-colors duration-300 disabled:cursor-not-allowed;
+	@apply px-4 h-9 rounded-md hover:bg-primary transition-colors duration-300 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300;
 }
 
 .default {

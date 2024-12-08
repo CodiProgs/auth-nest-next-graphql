@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/form-elements/button/Button'
@@ -9,9 +9,7 @@ import { Heading } from '@/components/ui/heading/Heading'
 
 import { SITE_NAME } from '@/constants/seo.constant'
 
-import { PUBLIC_URL } from '@/config/url.config'
-
-import { authVar } from '@/stores/store'
+import { publicPages } from '@/config/pages.config'
 
 import styles from './Auth.module.scss'
 import { AuthFields } from './AuthFields'
@@ -38,13 +36,11 @@ const Auth: FC = () => {
 	} = useAuth(isLogin, reset)
 
 	const onSubmit: SubmitHandler<RegisterDto & LoginDto> = data => {
-		setErrors({})
 		mutate({
 			variables: {
 				authInput: data
 			}
 		})
-		authVar(true)
 	}
 
 	const toggleIsLogin = () => {
@@ -57,7 +53,7 @@ const Auth: FC = () => {
 		<div className={styles.wrapper}>
 			<div className={styles.content}>
 				<div className={styles.logo}>
-					<Link href={PUBLIC_URL.home()}>{SITE_NAME}</Link>
+					<Link href={publicPages.home}>{SITE_NAME}</Link>
 				</div>
 				<Heading className={styles.heading}>
 					{isLogin ? 'Login' : 'Register'}
@@ -70,9 +66,9 @@ const Auth: FC = () => {
 						graphqlErrors={graphqlErrors}
 					/>
 					<>
-						{graphqlErrors?.form && (
+						{graphqlErrors?.form ? (
 							<p className={styles.error}>{graphqlErrors.form as string}</p>
-						)}
+						) : null}
 					</>
 					<div className={styles.buttons}>
 						<Button

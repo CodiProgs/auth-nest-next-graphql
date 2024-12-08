@@ -1,8 +1,7 @@
 import type { Config } from 'tailwindcss'
-
 import { COLORS } from './src/constants/colors.constant'
 
-const config: Config = {
+export default {
 	content: [
 		'./src/pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -29,5 +28,4 @@ const config: Config = {
 	darkMode: 'class',
 	mode: 'jit',
 	plugins: []
-}
-export default config
+} satisfies Config
