@@ -1,6 +1,6 @@
 import { NavigateOptions } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
-import { PUBLIC_URL } from '@/config/url.config'
+import { publicPages } from '@/config/pages.config'
 
 import { authVar } from '@/stores/store'
 
@@ -33,7 +33,7 @@ class AuthService {
 		tokenService.remove()
 		authVar(false)
 
-		if (push) push(PUBLIC_URL.home())
+		if (push) push(publicPages.home)
 	}
 }
 

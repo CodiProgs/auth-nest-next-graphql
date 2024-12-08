@@ -1,15 +1,15 @@
-import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
-import * as cookieParser from 'cookie-parser'
 import { BadRequestException, ValidationPipe } from '@nestjs/common'
-import { GraphQLErrorFilter } from './common/filters'
+import { NestFactory } from '@nestjs/core'
 import { NestExpressApplication } from '@nestjs/platform-express'
+import * as cookieParser from 'cookie-parser'
+import { AppModule } from './app.module'
+import { GraphQLErrorFilter } from './common/filters'
 
 async function bootstrap() {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
 	app.enableCors({
-		origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+		origin: process.env.FRONTEND_URL ?? 'http://localhost:3000',
 		credentials: true
 	})
 	app.use(cookieParser())
@@ -29,6 +29,6 @@ async function bootstrap() {
 	app.useGlobalFilters(new GraphQLErrorFilter())
 	app.disable('x-powered-by')
 
-	await app.listen(process.env.PORT || 4200)
+	await app.listen(process.env.PORT ?? 4200)
 }
 bootstrap()

@@ -75,8 +75,8 @@ export type RegisterDto = {
 }
 
 export type UpdateUserDto = {
-	email: Scalars['String']['input']
-	name: Scalars['String']['input']
+	email?: InputMaybe<Scalars['String']['input']>
+	name?: InputMaybe<Scalars['String']['input']>
 }
 
 export type UserType = {
@@ -386,12 +386,14 @@ export function useProfileLazyQuery(
 	)
 }
 export function useProfileSuspenseQuery(
-	baseOptions?: Apollo.SuspenseQueryHookOptions<
-		ProfileQuery,
-		ProfileQueryVariables
-	>
+	baseOptions?:
+		| Apollo.SkipToken
+		| Apollo.SuspenseQueryHookOptions<ProfileQuery, ProfileQueryVariables>
 ) {
-	const options = { ...defaultOptions, ...baseOptions }
+	const options =
+		baseOptions === Apollo.skipToken
+			? baseOptions
+			: { ...defaultOptions, ...baseOptions }
 	return Apollo.useSuspenseQuery<ProfileQuery, ProfileQueryVariables>(
 		ProfileDocument,
 		options

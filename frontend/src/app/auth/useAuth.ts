@@ -7,7 +7,9 @@ import toast from 'react-hot-toast'
 
 import { tokenService } from '@/services/token.service'
 
-import { DASHBOARD_URL } from '@/config/url.config'
+import { dashboardPages } from '@/config/pages.config'
+
+import { authVar } from '@/stores/store'
 
 import {
 	LoginDocument,
@@ -31,15 +33,21 @@ export const useAuth = (
 		mutation,
 		{
 			onCompleted(data) {
+				setErrors({})
 				reset()
+
 				tokenService.save(data.login?.accessToken || data.register?.accessToken)
+				authVar(true)
+
 				toast.success('Success')
-				push(DASHBOARD_URL.home())
+
+				push(dashboardPages.home)
 				refresh()
 			},
 			onError(error) {
-				const extensions = error?.graphQLErrors?.[0]?.extensions
-				setErrors(extensions)
+				if (error?.graphQLErrors?.[0]?.extensions) {
+					setErrors(error.graphQLErrors[0].extensions)
+				}
 			}
 		}
 	)

@@ -1,7 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql'
 import {
 	IsEmail,
-	IsNotEmpty,
+	IsOptional,
 	IsString,
 	MaxLength,
 	MinLength
@@ -9,15 +9,15 @@ import {
 
 @InputType()
 export class UpdateUserDto {
-	@Field()
-	@IsNotEmpty()
+	@Field({ nullable: true })
+	@IsOptional()
 	@IsString()
 	@MinLength(3)
 	@MaxLength(20)
-	name: string
+	name?: string
 
-	@Field()
-	@IsNotEmpty()
+	@Field({ nullable: true })
+	@IsOptional()
 	@IsEmail({}, { message: 'Invalid email' })
-	email: string
+	email?: string
 }

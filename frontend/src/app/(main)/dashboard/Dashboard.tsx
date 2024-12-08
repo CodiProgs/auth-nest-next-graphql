@@ -9,7 +9,7 @@ import { Heading } from '@/components/ui/heading/Heading'
 
 import { authService } from '@/services/auth.service'
 
-import { DASHBOARD_URL } from '@/config/url.config'
+import { dashboardPages } from '@/config/pages.config'
 
 import { useProfile } from '@/hooks/useProfile'
 
@@ -18,18 +18,18 @@ import styles from './Dashboard.module.scss'
 const Dashboard: FC = () => {
 	const { push } = useRouter()
 
-	const { user, loading } = useProfile()
+	const { user, loading, error } = useProfile()
 
 	return (
 		<div className={styles.wrapper}>
 			{loading ? (
 				<Loader />
-			) : user ? (
+			) : !error && user ? (
 				<>
 					<Heading className={styles.heading}>Hello {user.name}!</Heading>
 					<Button
 						className={styles.button}
-						onClick={() => push(DASHBOARD_URL.settings())}
+						onClick={() => push(dashboardPages.settings)}
 					>
 						Settings
 					</Button>
@@ -42,7 +42,10 @@ const Dashboard: FC = () => {
 					</Button>
 				</>
 			) : (
-				<></>
+				<>
+					<Heading className={styles.heading}>Error</Heading>
+					<p>{error?.message}</p>
+				</>
 			)}
 		</div>
 	)

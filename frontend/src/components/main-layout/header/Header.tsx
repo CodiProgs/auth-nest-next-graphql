@@ -5,7 +5,7 @@ import { FC, useEffect, useState } from 'react'
 
 import { Loader } from '@/components/ui/Loader'
 
-import { PUBLIC_URL } from '@/config/url.config'
+import { publicPages } from '@/config/pages.config'
 
 import { useAuth } from '@/hooks/useAuth'
 
@@ -22,7 +22,7 @@ const Header: FC = () => {
 
 	return (
 		<div className={styles.header}>
-			<Link href={PUBLIC_URL.home()}>Home</Link>
+			<Link href={publicPages.home}>Home</Link>
 			{!isMounted ? (
 				<Loader className={styles.loader} />
 			) : isAuth ? (
@@ -30,7 +30,7 @@ const Header: FC = () => {
 			) : (
 				<Link
 					className={styles.link}
-					href={PUBLIC_URL.auth()}
+					href={publicPages.auth}
 				>
 					login
 				</Link>
